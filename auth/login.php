@@ -1,5 +1,5 @@
-<!-- auth/login.php -->
 <?php
+// auth/login.php
 session_start();
 require_once '../config/koneksi.php';
 

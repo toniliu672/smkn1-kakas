@@ -1,5 +1,5 @@
-<!-- admin/pages/dashboard -->
 <?php
+// admin/pages/dashboard
 require_once '../../auth/auth_check.php';
 check_login();
 

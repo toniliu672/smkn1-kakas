@@ -1,5 +1,5 @@
-<!-- auth/logout.php -->
 <?php
+// auth/logout.php
 session_start();
 
 // Destroy the session

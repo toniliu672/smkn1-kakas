@@ -1,5 +1,4 @@
 <!-- auth/unauthorized.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 

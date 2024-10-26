@@ -1,5 +1,5 @@
-<!-- auth/auth_check.php -->
 <?php
+// auth/auth_check.php
 session_start();
 
 function check_login()

@@ -1,6 +1,5 @@
-<!-- config/test_koneksi.php -->
-
 <?php
+// config/test_koneksi.php
 // Sertakan file koneksi
 require_once 'koneksi.php';
 

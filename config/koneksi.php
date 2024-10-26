@@ -1,5 +1,5 @@
-<!-- config/koneksi.php -->
 <?php
+// config/koneksi.php
 // Konfigurasi database
 $host = 'localhost';  // nama host database, biasanya 'localhost'
 $dbname = 'database_sekolah';  // ganti dengan nama database Anda
