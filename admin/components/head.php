@@ -8,25 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($page_title); ?></title>
     <link href="../../public/css/tailwind.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../public/logo.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="../../public/logo.jpg" type="image/x-icon">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- JQuary -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <style>
         .bg-image {
-            background-image: url('../public/logo2.png');
+            background-image: url('../../public/logo2.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             position: fixed;
             top: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
+            max-width: 1200px;
             height: 100%;
+            max-height: 1200px;
             opacity: 0.15;
             z-index: -1;
         }
+
 
         .glassmorphism {
             background: rgba(255, 255, 255, 0.6);
