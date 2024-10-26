@@ -137,3 +137,51 @@ function getDetailGuru($pdo, $id)
         return ['status' => 'error', 'message' => $e->getMessage()];
     }
 }
+
+// Fungsi keperluan print
+function getAllGuruForPrint($pdo)
+{
+    try {
+        // Query untuk mendapatkan data guru dan mata pelajaran yang diajar
+        $query = "SELECT g.*, 
+                 GROUP_CONCAT(DISTINCT mp.id) as mapel_ids,
+                 GROUP_CONCAT(DISTINCT mp.nama_mata_pelajaran) as mapel_names
+                 FROM guru g
+                 LEFT JOIN guru_mata_pelajaran gmp ON g.id = gmp.id_guru
+                 LEFT JOIN mata_pelajaran mp ON gmp.id_mata_pelajaran = mp.id
+                 WHERE g.status_aktif = 'aktif'
+                 GROUP BY g.id
+                 ORDER BY g.nama_lengkap ASC";
+
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Format data mata pelajaran
+        foreach ($result as &$guru) {
+            $guru['mata_pelajaran'] = [];
+            if (!empty($guru['mapel_ids']) && !empty($guru['mapel_names'])) {
+                $mapelIds = explode(',', $guru['mapel_ids']);
+                $mapelNames = explode(',', $guru['mapel_names']);
+                for ($i = 0; $i < count($mapelIds); $i++) {
+                    $guru['mata_pelajaran'][] = [
+                        'id' => $mapelIds[$i],
+                        'nama' => $mapelNames[$i]
+                    ];
+                }
+            }
+            // Hapus field yang tidak diperlukan
+            unset($guru['mapel_ids'], $guru['mapel_names']);
+        }
+
+        return [
+            'status' => 'success',
+            'data' => $result
+        ];
+    } catch (Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ];
+    }
+}
