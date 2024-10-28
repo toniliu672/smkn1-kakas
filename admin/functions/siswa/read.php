@@ -103,25 +103,30 @@ function getDetailSiswa($pdo, $id)
 }
 
 // Function untuk keperluan print/export
-function getAllSiswaForPrint($pdo, $filters = [])
-{
+function getAllSiswaForPrint($pdo, $filters = []) {
     try {
         $where = ["1=1"];
         $params = [];
 
         if (!empty($filters['angkatan'])) {
-            $where[] = "a.tahun = ?";
+            $where[] = "s.id_angkatan = ?"; // Ubah ke id_angkatan
             $params[] = $filters['angkatan'];
         }
 
         if (!empty($filters['jurusan'])) {
-            $where[] = "j.id = ?";
+            $where[] = "s.id_jurusan = ?"; // Ubah ke id_jurusan
             $params[] = $filters['jurusan'];
         }
 
         $whereClause = "WHERE " . implode(" AND ", $where);
 
-        $query = "SELECT s.*, a.tahun as angkatan, j.nama_jurusan
+        $query = "SELECT s.*, 
+                        a.tahun as angkatan, 
+                        j.nama_jurusan,
+                        COALESCE(s.nis, '-') as nis,
+                        COALESCE(s.nisn, '-') as nisn,
+                        COALESCE(s.no_hp, '-') as no_hp,
+                        COALESCE(s.alamat, '-') as alamat
                  FROM siswa s
                  JOIN angkatan a ON s.id_angkatan = a.id
                  JOIN jurusan j ON s.id_jurusan = j.id
@@ -130,10 +135,16 @@ function getAllSiswaForPrint($pdo, $filters = [])
 
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return [
             'status' => 'success',
-            'data' => $stmt->fetchAll(PDO::FETCH_ASSOC)
+            'message' => 'Data berhasil diambil',
+            'data' => $data,
+            'filter_info' => [
+                'angkatan' => !empty($filters['angkatan']) ? $filters['angkatan'] : null,
+                'jurusan' => !empty($filters['jurusan']) ? $filters['jurusan'] : null
+            ]
         ];
     } catch (Exception $e) {
         return [

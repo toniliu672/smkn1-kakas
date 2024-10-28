@@ -133,6 +133,25 @@ $(document).ready(function() {
         $('#totalData').text(total);
     }
 
+    function getPrintUrl() {
+        let url = './printSiswa.php';
+        let params = [];
+        
+        if (searchParams.angkatan) {
+            params.push(`angkatan=${searchParams.angkatan}`);
+        }
+        if (searchParams.jurusan) {
+            params.push(`jurusan=${searchParams.jurusan}`);
+        }
+        
+        return url + (params.length ? '?' + params.join('&') : '');
+    }
+    
+    // Update link cetak saat filter berubah
+    function updatePrintLink() {
+        $('.print-link').attr('href', getPrintUrl());
+    }
+
     // Search dan filter handlers
     $('#searchInput').on('keyup', function() {
         currentPage = 1;
@@ -144,6 +163,7 @@ $(document).ready(function() {
         currentPage = 1;
         searchParams[$(this).data('filter')] = $(this).val();
         loadData();
+        updatePrintLink();
     });
 
     // View handler

@@ -47,8 +47,7 @@ $daftarAngkatan = getAllAngkatan($pdo);
                         <i class="fas fa-plus mr-2"></i>Tambah Siswa
                     </a>
                 <?php endif; ?>
-                <a href="./printSiswa.php"
-                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition duration-300 text-sm">
+                <a href="./printSiswa.php" class="print-link bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition duration-300">
                     <i class="fas fa-print mr-2"></i>Cetak Data
                 </a>
             </div>
