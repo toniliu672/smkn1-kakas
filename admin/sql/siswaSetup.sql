@@ -42,7 +42,7 @@ CREATE TABLE siswa (
     FOREIGN KEY (id_angkatan) REFERENCES angkatan(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (id_jurusan) REFERENCES jurusan(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     INDEX idx_angkatan (id_angkatan),
-    INDEX idx_jurusan (id_jurusan),
+    INDEX idx_jurusan (id_jurusan)
 );
 
 -- Trigger untuk menambah jumlah siswa di angkatan saat insert siswa baru
