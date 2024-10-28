@@ -139,9 +139,25 @@ function getDetailGuru($pdo, $id)
 }
 
 // Fungsi keperluan print
-function getAllGuruForPrint($pdo)
+
+function getAllGuruForPrint($pdo, $search = [])
 {
     try {
+        $where = ["1=1"];
+        $params = [];
+
+        if (!empty($search['status'])) {
+            $where[] = "g.status = ?";
+            $params[] = $search['status'];
+        }
+
+        if (!empty($search['status_aktif'])) {
+            $where[] = "g.status_aktif = ?";
+            $params[] = $search['status_aktif'];
+        }
+
+        $whereClause = "WHERE " . implode(" AND ", $where);
+
         // Query untuk mendapatkan data guru dan mata pelajaran yang diajar
         $query = "SELECT g.*, 
                  GROUP_CONCAT(DISTINCT mp.id) as mapel_ids,
@@ -149,12 +165,12 @@ function getAllGuruForPrint($pdo)
                  FROM guru g
                  LEFT JOIN guru_mata_pelajaran gmp ON g.id = gmp.id_guru
                  LEFT JOIN mata_pelajaran mp ON gmp.id_mata_pelajaran = mp.id
-                 WHERE g.status_aktif = 'aktif'
+                 $whereClause
                  GROUP BY g.id
                  ORDER BY g.nama_lengkap ASC";
 
         $stmt = $pdo->prepare($query);
-        $stmt->execute();
+        $stmt->execute($params);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Format data mata pelajaran

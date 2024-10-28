@@ -1,4 +1,4 @@
-<!-- auth/unauthorized.php -->
+<!-- admin/unauthorized.php -->
 <!DOCTYPE html>
 <html lang="en">
 
